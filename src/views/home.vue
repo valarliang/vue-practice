@@ -1,0 +1,25 @@
+<template>
+  <div>
+    <h1>Home</h1>
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>
+</template>
+
+<script>
+  export default {
+    created() {
+      // 模板编译
+      function compile(templet) {
+        templet = templet.replace(/\{\{(.+)\}\}/g, (a,b) => '${'+b+'}')
+        const body = 'let str=""; with(obj){str=`'+templet+'`} return str'
+        return new Function('obj', body)
+      }
+      const str = compile('<a>{{name}}</a>')({name: 'Tom'})
+      console.log(str)
+    }
+  }
+</script>
+
+<style lang="stylus" scoped>
+
+</style>
