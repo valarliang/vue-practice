@@ -9,6 +9,6 @@ routerList.keys().forEach(key => {
   const config = routerList(key).default
   config.length ? routes.push(...config) : routes.push(config)
 })
-console.log('routerList.keys():',routerList.keys(),'\n','routes:', routes)
+console.log('\n','routes:', routes)
 
 export default new VueRouter({routes})

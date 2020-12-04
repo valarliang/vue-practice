@@ -14,13 +14,13 @@
           let value = obj[key]
           Object.defineProperty(obj, key, {
             get() {
-              console.log('get '+key)
+              // console.log('get '+key)
               return value
             },
             set(v) {
               if (typeof value == 'object') reactive(value)
               if (v == value) return
-              console.log('set '+key)
+              // console.log('set '+key)
               value = v
             }
           })
