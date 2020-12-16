@@ -1,25 +1,22 @@
 <template>
-  <div>
+  <div class="body">
     <h1>Home</h1>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-link to="/defineProperty">Go to DefineProperty</router-link>
+    <router-link to="/proxy">Go to Proxy</router-link>
+    <router-link to="/compile">Go to Compile</router-link>
+    <router-link to="/form-demo">Go to Form demo</router-link>&nbsp;
   </div>
 </template>
 
 <script>
   export default {
-    created() {
-      // 模板编译
-      function compile(templet) {
-        templet = templet.replace(/\{\{(.+)\}\}/g, (a,b) => '${'+b+'}')
-        const body = 'let str=""; with(obj){str=`'+templet+'`} return str'
-        return new Function('obj', body)
-      }
-      const str = compile('<a>{{name}}</a>')({name: 'Tom'})
-      console.log(str)
-    }
+
   }
 </script>
 
 <style lang="stylus" scoped>
-
+.body
+  display flex
+  flex-direction column
+  align-items center
 </style>

@@ -2,8 +2,6 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <router-link to="/home">Go to Home</router-link>&nbsp;
-    <router-link to="/article1">Go to Article1</router-link>&nbsp;
-    <router-link to="/login">Go to Login</router-link>
     <router-view></router-view>
   </div>
 </template>

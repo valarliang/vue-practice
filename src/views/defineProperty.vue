@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>login</h1>
+    <h1>Object.defineProperty test</h1>
   </div>
 </template>
 
@@ -12,23 +12,26 @@
       const reactive = (obj) => {
         Object.keys(obj).forEach(key => {
           let value = obj[key]
+          if (typeof value == 'object') reactive(value)
           Object.defineProperty(obj, key, {
             get() {
               // console.log('get '+key)
               return value
             },
             set(v) {
-              if (typeof value == 'object') reactive(value)
+              if (typeof v == 'object') reactive(v)
               if (v == value) return
-              // console.log('set '+key)
+              console.log('set '+key)
               value = v
             }
           })
         })
       }
       reactive(obj)
-      obj.a = 5
-      obj.b.c = 4 // 执行getter
+      obj.b.c = 4 // 通过循环的递归挂载c的响应
+      obj.a = {d: 3}
+      obj.a.d = 2 // 通过setter内递归挂载d的响应
+      obj.a.e = 5 // 新增的属性无法挂载响应
     }
   }
 </script>

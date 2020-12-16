@@ -9,7 +9,7 @@
         <Input v-model="model.password" type="password" />
       </FormItem>
     </Form>
-    <div class="btn"><button @click.prevent="go">Go to Article2</button></div>
+    <div class="btn"><button @click.prevent="go">login Home</button></div>
   </div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
           duration: 1000,
         });
         notice.show();
-        if (valid) this.$router.push('/article2')
+        if (valid) this.$router.push('/home')
       });
     },
   },
