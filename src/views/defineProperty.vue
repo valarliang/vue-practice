@@ -29,9 +29,9 @@
       }
       reactive(obj)
       obj.b.c = 4 // 通过循环的递归挂载c的响应
+      obj.b.e = 5 // 新增的属性无法挂载响应
       obj.a = {d: 3}
       obj.a.d = 2 // 通过setter内递归挂载d的响应
-      obj.a.e = 5 // 新增的属性无法挂载响应
     }
   }
 </script>

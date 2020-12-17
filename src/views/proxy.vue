@@ -7,18 +7,14 @@ export default {
   created() {
     const obj = {a:1, b: {c: 2}, d: 3}
     function reactive(obj) {
-      Object.keys(obj).forEach(key => {
-        if (typeof obj[key] == 'object') {
-          return obj[key] = reactive(obj[key])
-        }
-      })
       return new Proxy(obj, {
+        get(target, key, receiver) {
+          const result = Reflect.get(target, key, receiver)
+          console.log('get', key)
+          return typeof result == 'object' ? reactive(result) : result // 响应式处理发生在设置值得时候，性能得到很大提升
+        },
         set(target, key, value, receiver) {
           console.log('set',key)
-          if (typeof value == 'object') {
-            const newVal = reactive(value)
-            return Reflect.set(target, key, newVal, receiver)
-          }
           return Reflect.set(target, key, value, receiver)
         },
         deleteProperty(obj, key) {
@@ -32,9 +28,9 @@ export default {
       })
     }
     const data = reactive(obj)
-    // data.a = [1,2]
-    'd' in data
-    console.log(data)
+    data.b.e = 4
+    // 'd' in data
+    // console.log(data)
   },
 };
 </script>
