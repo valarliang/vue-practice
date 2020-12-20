@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Header @click="click" />
     <img alt="Vue logo" src="./assets/logo.png">
     <router-link to="/home">Go to Home</router-link>&nbsp;
     <router-view></router-view>
@@ -8,7 +9,30 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      app: 'app',
+      acc: 3,
+    }
+  },
+  created() {
+    // console.log(this.$parent)
+  },
+  mounted() {
+    this.test()
+  },
+  methods: {
+    click(evnet,a,b) {
+      console.log(a,b)
+    },
+    test() {
+      const obj = {app: 'obj'}
+      if(++this.acc > 5) return
+      this.test.call(obj) // 会导致死循环
+      console.log(this) // VueComponent
+    }
+  }
 }
 </script>
 

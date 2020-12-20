@@ -4,6 +4,7 @@ import router from './router'
 import mixins from './utils/mixins'
 // eslint-disable-next-line
 import global from './components/globalComponent'
+import './assets/styles/reset.css'
 
 Vue.config.productionTip = false
 
