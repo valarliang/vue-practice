@@ -24,13 +24,13 @@ export default {
   },
   methods: {
     click(evnet,a,b) {
-      console.log(a,b)
+      // console.log(a,b)
     },
     test() {
       const obj = {app: 'obj'}
       if(++this.acc > 5) return
       this.test.call(obj) // 会导致死循环
-      console.log(this) // VueComponent
+      // console.log(this) // VueComponent
     }
   }
 }
