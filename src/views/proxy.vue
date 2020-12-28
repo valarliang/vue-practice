@@ -11,7 +11,7 @@ export default {
         get(target, key, receiver) {
           const result = Reflect.get(target, key, receiver)
           console.log('get', key)
-          return typeof result == 'object' ? reactive(result) : result // 响应式处理发生在设置值得时候，性能得到很大提升
+          return typeof result == 'object' ? reactive(result) : result // 响应式递归处理发生在设置值得时候，性能得到很大提升
         },
         set(target, key, value, receiver) {
           console.log('set',key)
