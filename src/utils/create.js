@@ -9,8 +9,8 @@ export default function create(component, props) {
   document.body.appendChild(vm.$el)
   const comp = vm.$children[0]
   comp.remove = () => {
-    document.body.removeChild(vm.$el)
-    vm.$destroy()
+    document.body.removeChild(comp.$el)
+    comp.$destroy()
   }
 
   // const Ctor = Vue.extend(component)
