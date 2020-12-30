@@ -20,18 +20,23 @@ export default {
     // console.log(this.$parent)
   },
   mounted() {
-    this.test()
+    const config = {
+      data() { // 使用函数可规避 Test 的实例共享同一data
+        return {a:'a'}
+      }
+    }
+    function Test() {
+      this.data = typeof config.data == 'function' ? config.data() : config.data
+    }
+    const a = new Test()
+    const b = new Test()
+    a.data.a = 'b'
+    // console.log(a,b)
   },
   methods: {
     click(evnet,a,b) {
       // console.log(a,b)
     },
-    test() {
-      const obj = {app: 'obj'}
-      if(++this.acc > 5) return
-      this.test.call(obj) // 会导致死循环
-      // console.log(this) // VueComponent
-    }
   }
 }
 </script>
