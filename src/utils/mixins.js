@@ -32,7 +32,7 @@ export default {
       this.$children.forEach(child => {
         const name = child.$options.name
         if (name === componentName) child.$emit(event, ...params)
-        else child.broadcast(componentName,event,...params) // 不能使用this.broadcast，因为此时broadcast已绑定实例，调用call无济于事
+        else child.broadcast(componentName,event,...params) // 不能使用this.broadcast，因为此时broadcast已绑定实例，用call也无济于事
       });
     }
   }
