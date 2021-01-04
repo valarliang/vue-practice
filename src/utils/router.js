@@ -2,7 +2,7 @@ let Vue
 class MyRouter {
   constructor(options) {
     this.$options = options
-    this.routerMap = {}
+    this.routeMap = {}
     this.app = new Vue({
       data: {
         current: '/'
@@ -11,33 +11,37 @@ class MyRouter {
   }
   init() {
     this.bindEvents()
-    this.createRouterMap()
+    this.createRouteMap()
     this.initComponent()
   }
   bindEvents() {
     window.addEventListener('load', this.hashChange.bind(this))
-    window.addEventListener('hashChange', this.hashChange.bind(this))
+    window.addEventListener('hashchange', this.hashChange.bind(this))
   }
   hashChange() {
     this.app.current = window.location.hash.slice(1) || '/'
   }
-  createRouterMap() {
+  createRouteMap() {
     this.$options.routes.forEach(route => {
-      this.routerMap[route.path] = route
+      this.routeMap[route.path] = route
     })
   }
   initComponent() {
     Vue.component('router-link', {
+      props: {
+        to: String
+      },
       render(h) {
-        return h('a', {
-          attrs: {'href': '#' + this.to}
-        }, [this.$slots.default])
-        // return <a href={'#' + this.to}>{this.$slots.default}</a>
+        // return h('a', {
+        //   attrs: {'href': '#' + this.to}
+        // }, [this.$slots.default])
+        return <a href={'#' + this.to}>{this.$slots.default}</a>
       }
     })
     Vue.component('router-view', {
       render: h => {
-        return h(this.routerMap[this.app.current].component)
+        console.log(this.app.current)
+        return h(this.routeMap[this.app.current].component)
       }
     })
   }

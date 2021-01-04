@@ -1,5 +1,5 @@
 export default [{
-  path:'/home',
+  path:'/',
   name:'Home',
   component: () => import('../views/home.vue'),
 },{

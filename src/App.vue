@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Header @click="click" />
-    <img alt="Vue logo" src="./assets/logo.png">
-    <router-link to="/home">Go to Home</router-link>&nbsp;
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
     <router-view></router-view>
   </div>
 </template>
