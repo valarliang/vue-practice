@@ -3,6 +3,7 @@
     <Header @click="click" />
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
+    <div>{{typeof test.b == 'number' ? test.b : test.b.c}}</div>
     <router-view></router-view>
   </div>
 </template>
@@ -14,6 +15,7 @@ export default {
     return {
       app: 'app',
       acc: 3,
+      test: {a:1,b:2},
     }
   },
   created() {
@@ -35,7 +37,8 @@ export default {
   },
   methods: {
     click(evnet,a,b) {
-      // console.log(a,b)
+      // this.$store.dispatch('increment')
+      this.test.b = {c: 3, d: 4}
     },
   }
 }

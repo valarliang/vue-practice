@@ -6,14 +6,14 @@ class Store {
       data: options.state
     })
     this.getters = {}
-    this.mountGetters(options.getter)
+    this.mountGetters(options.getters)
     this.commit = this.commit.bind(this)
     this.dispatch = this.dispatch.bind(this)
   }
   mountGetters(getter) {
     Object.keys(getter).forEach(e => {
-      Object.defineProperties(this.getters, e, {
-        get() {
+      Object.defineProperty(this.getters, e, {
+        get: () => { // 注意函数中用到了this
           return getter[e](this.state, this.getters)
         }
       })

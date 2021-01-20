@@ -6,13 +6,13 @@ import Vue from 'vue' // 引入vue
 function changeStr(str){
     return str.charAt(0).toUpperCase() + str.slice(1)
 }
-
 /*
-    require.context(arg1,arg2,arg3)
-        arg1 - 读取文件的路径
-        arg2 - 是否遍历文件的子目录
-        arg3 - 匹配文件的正则
+require.context(arg1,arg2,arg3)
+arg1 - 读取文件的路径
+arg2 - 是否遍历文件的子目录
+arg3 - 匹配文件的正则
 */
+// console.log(require.context('../../', false, /\.json$/)('./package.json'))
 const requireComponent = require.context('.', false, /\.vue$/)
 console.log('requireComponent.keys():',requireComponent.keys())
 requireComponent.keys().forEach(fileName => {

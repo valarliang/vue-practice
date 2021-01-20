@@ -14,7 +14,7 @@
     },
     methods: {
       click(event) {
-        // this.$emit('click', event, this.a,this.b)
+        this.$emit('click', event, this.a,this.b)
       }
     }
   }

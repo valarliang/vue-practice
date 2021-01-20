@@ -40,7 +40,7 @@ class MyRouter {
     })
     Vue.component('router-view', {
       render: h => {
-        console.log(this.app.current)
+        // console.log(this.app.current)
         return h(this.routeMap[this.app.current].component)
       }
     })

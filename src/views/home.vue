@@ -1,10 +1,11 @@
 <template>
   <div class="body">
     <h1>Home</h1>
-    <!-- <router-link to="/defineProperty">Go to DefineProperty</router-link>
-    <router-link to="/proxy">Go to Proxy</router-link>
-    <router-link to="/compile">Go to Compile</router-link>
-    <router-link to="/form-demo">Go to Form demo</router-link>&nbsp; -->
+    <router-link to="/defineProperty">Object.defineProperty</router-link>
+    <router-link to="/proxy">Proxy</router-link>
+    <router-link to="/compile">Compile</router-link>
+    <router-link to="/form-demo">Form demo</router-link>&nbsp;
+    <router-view class="view"></router-view>
   </div>
 </template>
 
@@ -19,4 +20,6 @@
   display flex
   flex-direction column
   align-items center
+  .view
+    margin-top 20px
 </style>
