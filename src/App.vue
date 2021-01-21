@@ -3,7 +3,7 @@
     <Header @click="click" />
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
-    <div>{{typeof test.b == 'number' ? test.b : test.b.c}}</div>
+    <div>{{test[1].a}}</div>
     <router-view></router-view>
   </div>
 </template>
@@ -15,13 +15,13 @@ export default {
     return {
       app: 'app',
       acc: 3,
-      test: {a:1,b:2},
+      test: [1,{a:2}],
     }
   },
   created() {
     // console.log(this.$parent)
   },
-  mounted() {
+  mounted() {a
     const config = {
       data() { // 使用函数可规避 Test 的实例共享同一data
         return {a:'a'}
@@ -38,7 +38,7 @@ export default {
   methods: {
     click(evnet,a,b) {
       // this.$store.dispatch('increment')
-      this.test.b = {c: 3, d: 4}
+      this.test[1].a = 'abc'
     },
   }
 }
