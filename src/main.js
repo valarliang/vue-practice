@@ -6,6 +6,7 @@ import mixins from './utils/mixins'
 // eslint-disable-next-line
 import global from './components/globalComponent'
 import './assets/styles/reset.css'
+import './assets/icons'
 
 Vue.config.productionTip = false
 

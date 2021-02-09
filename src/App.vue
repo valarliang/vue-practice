@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header @click="click" />
+    <svg><use href='#icon-architecture'/></svg>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
     <div>{{test[1].a}}</div>
@@ -44,7 +45,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus" scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -57,4 +58,8 @@ img {
   display: block;
   margin: 0 auto;
 }
+svg
+  display block
+  width 100px
+  margin auto
 </style>
