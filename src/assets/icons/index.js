@@ -1,3 +1,3 @@
-const reqSvgs = require.context('.', true, /\.svg$/)
+const reqSvgs = require.context('.', false, /\.svg$/)
 
 reqSvgs.keys().map(reqSvgs)
