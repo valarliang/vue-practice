@@ -7,10 +7,18 @@ import mixins from './utils/mixins'
 import global from './components/globalComponent'
 import './assets/styles/reset.css'
 import './assets/icons'
+import create from '@/utils/create.js'
+import Notice from '@/components/notice.vue'
+import './auth';
 
 Vue.config.productionTip = false
 
 Vue.mixin(mixins)
+
+Vue.prototype.$notice = (config) => {
+  const ins = create(Notice, config)
+  ins.show()
+}
 
 new Vue({
   store,

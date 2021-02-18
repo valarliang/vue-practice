@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <Header @click="click" />
-    <svg><use href='#icon-architecture'/></svg>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <SvgIcon name='architecture' class='svg'/>
+    <router-link to="/home">Home</router-link>
+     | <router-link to="/about">About</router-link>
     <div>{{test[1].a}}</div>
-    <router-view></router-view>
+    <router-view />
   </div>
 </template>
 
@@ -37,10 +36,7 @@ export default {
     // console.log(a,b)
   },
   methods: {
-    click(evnet,a,b) {
-      // this.$store.dispatch('increment')
-      this.test[1].a = 'abc'
-    },
+
   }
 }
 </script>
@@ -58,8 +54,9 @@ img {
   display: block;
   margin: 0 auto;
 }
-svg
+.svg
   display block
-  width 100px
+  width 50px
+  height 50px
   margin auto
 </style>

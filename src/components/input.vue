@@ -29,6 +29,10 @@
   }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="stylus" scoped>
+input
+  margin 10px
+  padding 2px 8px
+  border-radius 4px
+  border 1px solid gray
 </style>

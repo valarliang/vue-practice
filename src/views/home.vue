@@ -1,10 +1,9 @@
 <template>
   <div class="body">
     <h1>Home</h1>
-    <router-link to="/defineProperty">Object.defineProperty</router-link>
-    <router-link to="/proxy">Proxy</router-link>
-    <router-link to="/compile">Compile</router-link>
-    <router-link to="/form-demo">Form demo</router-link>&nbsp;
+    <router-link to="/home/defineProperty">Object.defineProperty</router-link>
+    <router-link to="/home/proxy">Proxy</router-link>
+    <router-link to="/home/compile">Compile</router-link>
     <router-view class="view"></router-view>
   </div>
 </template>

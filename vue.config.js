@@ -7,11 +7,11 @@ function resolve(dir) {
 }
 
 module.exports = {
-  publicPath: '/vue-demo',
+  publicPath: '/vue-test',
   devServer: {
     port,
   },
-  configureWebpack: {
+  configureWebpack: { // 基本配置
     name: title
   },
   chainWebpack(config) {
