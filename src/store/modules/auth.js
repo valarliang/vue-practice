@@ -5,9 +5,11 @@ function filterAsyncRoutes(routes, roles) {
   const res = []
   routes.forEach(route => {
     const tmp = { ...route }
-    if (hasPermission(roles, tmp)) res.push(tmp)
-    if (tmp.children) {
-      tmp.children = filterAsyncRoutes(tmp.children, roles)
+    if (hasPermission(roles, tmp)) {
+      if (tmp.children) {
+        tmp.children = filterAsyncRoutes(tmp.children, roles)
+      }
+      res.push(tmp)
     }
   })
   return res;

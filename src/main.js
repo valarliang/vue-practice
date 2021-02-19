@@ -10,15 +10,12 @@ import './assets/icons'
 import create from '@/utils/create.js'
 import Notice from '@/components/notice.vue'
 import './auth';
+import permission from './directive/permission';
 
 Vue.config.productionTip = false
-
 Vue.mixin(mixins)
-
-Vue.prototype.$notice = (config) => {
-  const ins = create(Notice, config)
-  ins.show()
-}
+Vue.prototype.$create = create
+Vue.directive('permission', permission)
 
 new Vue({
   store,

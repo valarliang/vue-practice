@@ -29,7 +29,7 @@ export default {
           if (username) {
             commit("SET_TOKEN", username)
             localStorage.setItem('token', username)
-            await getAccessibleRoutes()
+            await getAccessibleRoutes() // 遗留问题：其他用户登录后可访问之前用户的路由（路由实例没有重置）
             resolve();
           } else {
             reject("用户名、密码错误");

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <SvgIcon name='architecture' class='svg'/>
-    <router-link to="/home">Home</router-link>
-     | <router-link to="/about">About</router-link>
+    <router-link to="/home">Home</router-link> |
+    <router-link to="/about">About</router-link>
     <div>{{test[1].a}}</div>
     <router-view />
   </div>
@@ -34,6 +34,7 @@ export default {
     const b = new Test()
     a.data.a = 'b'
     // console.log(a,b)
+    console.log(this.$router)
   },
   methods: {
 

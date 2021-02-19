@@ -16,7 +16,6 @@ router.beforeEach(async (to, from, next) => {
     // if (to.path === '/login') next('/')
     // else {
       const hasRoles = store.state.user.roles.length > 0
-      console.log(hasRoles)
       if (!hasRoles) {
         try {
           await getAccessibleRoutes()

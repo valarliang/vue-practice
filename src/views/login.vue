@@ -14,7 +14,7 @@
 </template>
 
 <script>
-
+import Notice from '@/components/notice';
 export default {
   data() {
     return {
@@ -34,7 +34,7 @@ export default {
         this.$store.dispatch("user/login", { username: this.model.username })
         .then(() => {
           if (valid) {
-            // this.$notice({
+            // this.$create(Notice,{
             //   title: "Here we go!",
             //   message: "登录成功",
             // })

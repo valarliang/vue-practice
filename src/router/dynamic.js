@@ -7,11 +7,11 @@ export default [{
   children: [{
     path: 'index',
     component: () => import('@/views/about.vue'),
-    name: 'about',
+  },{
+    path: 'articles',
+    component: () => import('@/views/articles.vue'),
     meta: {
-      title: "About",
-      icon: "qq",
       roles: ['administrator']
-    },
+    }
   }]
 }]

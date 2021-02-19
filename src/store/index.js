@@ -12,6 +12,9 @@ requireModules.keys().forEach(key => {
 })
 const store = new Vuex.Store({
   modules,
+  getters: {
+    roles: state => state.user.roles
+  }
 })
 
 export default store
