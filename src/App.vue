@@ -34,7 +34,6 @@ export default {
     const b = new Test()
     a.data.a = 'b'
     // console.log(a,b)
-    console.log(this.$router)
   },
   methods: {
 
@@ -43,18 +42,16 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-#app {
+#app
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align center
   color: #2c3e50;
   margin-top: 60px;
-}
-img {
+img
   display: block;
   margin: 0 auto;
-}
 .svg
   display block
   width 50px

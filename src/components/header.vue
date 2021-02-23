@@ -1,6 +1,6 @@
 <template>
   <div class="bar" @click="click" >
-    <div class="account" @click="login">
+    <div class="account" @click="logout">
       <button class="btn">{{user.name}}</button>
       <SvgIcon name='login' class="svg"/>
     </div>
@@ -25,7 +25,8 @@
       click(event) {
         this.$emit('click', event, this.a,this.b)
       },
-      login() {
+      logout() {
+        this.$store.dispatch('user/resetToken')
         this.$router.push({name: 'login'})
       }
     }
@@ -33,7 +34,7 @@
 </script>
 
 <style lang="stylus" scoped>
-.bar 
+.bar
   position: fixed;
   top: 0;
   width: 100%;

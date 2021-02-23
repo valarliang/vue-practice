@@ -1,5 +1,6 @@
 import { routes as constRoutes } from '@/router';
 import asyncRoutes from '@/router/dynamic';
+import notFound from '@/router/notFound.js'
 
 function filterAsyncRoutes(routes, roles) {
   const res = []
@@ -27,12 +28,12 @@ export default {
   namespaced: true,
   state: {
     routes: constRoutes, // 完整路由表
-    accessedRoutes: [] // 用户可访问路由表
+    accessibleRoutes: [] // 用户可访问路由表
   },
   mutations: {
-    SET_ROUTES: (state, accessedRoutes) => {
-      state.accessedRoutes = accessedRoutes;
-      state.routes = constRoutes.concat(accessedRoutes);
+    SET_ROUTES: (state, accessibleRoutes) => {
+      state.accessibleRoutes = accessibleRoutes;
+      state.routes = constRoutes.concat(accessibleRoutes);
     }
   },
   actions: {
@@ -40,9 +41,10 @@ export default {
     generateRoutes({ commit }, roles) {
       return new Promise(resolve => {
         // 根据角色做过滤处理
-        const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles);
-        commit("SET_ROUTES", accessedRoutes);
-        resolve(accessedRoutes);
+        const accessibleRoutes = filterAsyncRoutes(asyncRoutes, roles)
+        accessibleRoutes.push(notFound)
+        commit("SET_ROUTES", accessibleRoutes)
+        resolve(accessibleRoutes)
       })
     }
   }

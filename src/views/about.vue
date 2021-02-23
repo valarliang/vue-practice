@@ -1,10 +1,12 @@
 <template>
   <div>
     <h2>About</h2>
-    <router-link class="link" to="/about/articles">Articles ></router-link>
-    <div v-permission="['administrator']">administrator</div>
-    <div v-permission="['passerby']">passerby</div>
-    <div v-permission="['passerby', 'administrator']">administrator & passerby</div>
+    <router-link class="link" to="/about/articles" v-permission="['administrator']">Articles ></router-link>
+    <div class="content">
+      <div v-permission="['administrator']">display when roles = administrator</div>
+      <div v-permission="['passerby']">display when roles = passerby</div>
+      <div v-permission="['passerby', 'administrator']">display when roles = administrator & passerby</div>
+    </div>
   </div>
 </template>
 
@@ -20,4 +22,8 @@ h2
 .link
   display block
   margin 10px
+.content
+  margin 0 auto
+  width 300px
+  text-align left
 </style>

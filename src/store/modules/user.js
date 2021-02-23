@@ -1,4 +1,4 @@
-import { getAccessibleRoutes } from '@/auth.js';
+import router, { createRouter, routes} from '@/router'
 
 export default {
   namespaced: true,
@@ -17,8 +17,10 @@ export default {
     },
     RESET_TOKEN(state) {
       localStorage.removeItem('token')
-      state.token = ''
-    }
+      state.token = null
+      state.name = null
+      state.roles = []
+}
   },
   actions: {
     // 模拟用户登录
@@ -29,8 +31,7 @@ export default {
           if (username) {
             commit("SET_TOKEN", username)
             localStorage.setItem('token', username)
-            await getAccessibleRoutes() // 遗留问题：其他用户登录后可访问之前用户的路由（路由实例没有重置）
-            resolve();
+            resolve()
           } else {
             reject("用户名、密码错误");
           }
