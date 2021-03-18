@@ -14,7 +14,7 @@ const moduleAnalyser = (filename = './src/main.js') => {
   traverse(ast, {
     ImportDeclaration({node}) {
       const dirname = path.dirname(filename); // src
-      const newFile = './' + path.join(dirname, node.source.value);
+      const newFile = './' + path.join(dirname, node.source.value); // Windows待验证
       dependencies[node.source.value] = newFile;
     }
   });
