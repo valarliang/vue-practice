@@ -1,18 +1,26 @@
 const path = require('path')
 const port = 7070
-const title = '最佳实践'
+const { name } = require('./package');
 
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
 module.exports = {
-  publicPath: '/vue-test',
+  publicPath: '/',
   devServer: {
     port,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
   },
   configureWebpack: { // 基本配置
-    name: title
+    name,
+    output: {
+      library: `${name}-[name]`,
+      libraryTarget: 'umd', // 把微应用打包成 umd 库格式
+      jsonpFunction: `webpackJsonp_${name}`,
+    },
   },
   chainWebpack(config) {
     // 对config链式操作可修改loader、plugin，配置查看 vue inspect --rule svg

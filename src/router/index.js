@@ -16,7 +16,7 @@ console.log('routerList.keys():', routerList.keys())
 
 export const createRouter = (routes) => new Router({
   mode: "history",
-  base: process.env.BASE_URL, // publicPath
+  base: window.__POWERED_BY_QIANKUN__ ? '/vue-practice/' : process.env.BASE_URL, // publicPath
   routes
 })
 

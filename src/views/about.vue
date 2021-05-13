@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>About</h2>
+    <div>display something after login</div>
     <router-link class="link" to="/about/articles" v-permission="['administrator']">Articles ></router-link>
     <div class="content">
       <div v-permission="['administrator']">display when roles = administrator</div>
