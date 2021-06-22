@@ -3,12 +3,13 @@
     <SvgIcon name='architecture' class='svg'/>
     <router-link to="/home">Home</router-link> |
     <router-link to="/about">About</router-link>
-    <div>{{test[1].a}}</div>
+    <!-- <div>store：{{this.$store.state}}</div> -->
     <router-view />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'App',
   data() {
@@ -18,10 +19,15 @@ export default {
       test: [1,{a:2}],
     }
   },
+  computed: {
+    ...mapState([
+      "count"
+    ]),
+  },
   created() {
     // console.log(this.$parent)
   },
-  mounted() {a
+  mounted() {
     const config = {
       data() { // 使用函数可规避 Test 的实例共享同一data
         return {a:'a'}

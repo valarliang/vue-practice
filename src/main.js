@@ -1,7 +1,8 @@
 import Vue from 'vue'
+import Vuex from "vuex";
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import _store from './store'
 import mixins from './utils/mixins'
 // eslint-disable-next-line
 import global from './components/globalComponent'
@@ -25,7 +26,9 @@ if (window.__POWERED_BY_QIANKUN__) {
 // let router = null;
 let instance = null;
 function render(props = {}) {
-  const { container } = props;
+  let { container, store } = props;
+  if (store) Vue.use(Vuex)
+  else store = _store
 
   instance = new Vue({
     router,
