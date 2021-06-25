@@ -14,7 +14,7 @@ const moduleAnalyser = (filename = './src/main.js') => { // 得到文件名、�
   traverse(ast, {
     ImportDeclaration({node}) {
       const dirname = path.dirname(filename); // src
-      const newFile = './' + path.join(dirname, node.source.value); // Windows待验证
+      const newFile = './' + path.join(dirname, node.source.value); // 非Windows路径
       dependencies[node.source.value] = newFile;
     }
   });
