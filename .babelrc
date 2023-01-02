@@ -10,9 +10,9 @@
           "safari": "11.1"
         },
         "corejs": 2, // 新版本需指定核心库版本
-        "useBuiltIns": "usage" // 按需注入，不需要入口 import @babel/preset-env
+        // "useBuiltIns": "usage" // 按需注入，不需要入口 import @babel/preset-env
       }
-    ],
-    "@babel/preset-react" // 支持react开发开发环境编译jsx
+    ]
+    // "@babel/preset-react" // 支持react开发开发环境编译jsx
   ]
 }

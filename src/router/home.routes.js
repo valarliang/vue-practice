@@ -22,7 +22,11 @@ export default [{
         path:'proxy',
         name:'jsproxy',
         component: () => import('@/views/proxy.vue'),
-      }    
+      },{
+        path:'visualize',
+        name:'visualize',
+        component: () => import('@/views/visualize.vue'),
+      } 
     ]        
   }]
 }]

@@ -26,6 +26,9 @@ export default {
   },
   created() {
     // console.log(this.$parent)
+    window.addEventListener('pageshow', (event) => {
+      console.log('pageshow--------', event.persisted)
+    });
   },
   mounted() {
     const config = {
