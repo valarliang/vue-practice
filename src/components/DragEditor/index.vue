@@ -14,7 +14,9 @@
       </div>
     </el-aside>
     <el-container class="middle">
-      <el-header>Header</el-header>
+      <el-header class="header">
+        <SvgIcon class='svg' v-for="item in operations" :key="item.name" :name='item.name' @click.native="item.handler" />
+      </el-header>
       <el-main>
         <div ref="editor" class="content" :style="contentStyle" @mousedown="clearBlockFocus">
           <CompBlock
@@ -22,6 +24,7 @@
             :key="index"
             :class="{focus: item.focus}"
             :index="index"
+            @drop.prevent
             @mousedown.native="blockMousedown($event, index, item)"
           />
           <div v-show="markLine.horizontal" class="h-line" :style="{ top: markLine.horizontal + 'px' }"></div>
@@ -37,6 +40,7 @@
 import CompBlock from "./CompBlock.vue";
 import material from "@/utils/drag-editor-material.js";
 import { mapState } from "vuex";
+import useOperation from './useOperation.js'
 export default {
   components: {
     CompBlock
@@ -44,7 +48,11 @@ export default {
   data() {
     return {
       componentList: material.componentList,
-      markLine: { horizontal: null, vertical: null }
+      markLine: { horizontal: null, vertical: null },
+      operations: [
+        { name: 'undo', handler: this.undo },
+        { name: 'redo', handler: this.redo },
+      ]
     }
   },
   computed: {
@@ -56,23 +64,39 @@ export default {
       return {width: width + 'px',height: height + 'px'}
     }
   },
+  created() {
+    this.opreationState = useOperation(this)
+  },
+  beforeDestroy() {
+    this.opreationState.destroyList.forEach(fn => fn && fn())
+  },
   methods: {
+    undo() {
+      this.opreationState.commands.undo()
+    },
+    redo() {
+      this.opreationState.commands.redo()
+    },
     dragstart(e, compConfig) {
       this.dragedComponent = compConfig
+      this.dropHandler = this.drop.bind(this, e.offsetY, e.offsetX) // 记录拖拽位置
       const editor = this.$refs.editor
       editor.addEventListener('dragenter', this.dragenter)
       editor.addEventListener('dragover', this.dragover)
       editor.addEventListener('dragleave', this.dragleave)
-      editor.addEventListener('drop', this.drop)
+      editor.addEventListener('drop', this.dropHandler)
+      this.$emit('dragstart')
     },
     dragend() {
       const editor = this.$refs.editor
       editor.removeEventListener('dragenter', this.dragenter)
       editor.removeEventListener('dragover', this.dragover)
       editor.removeEventListener('dragleave', this.dragleave)
-      editor.removeEventListener('drop', this.drop)
+      editor.removeEventListener('drop', this.dropHandler)
+      this.$emit('dragend')
     },
     dragenter(e) {
+      e.preventDefault()
       e.dataTransfer.dropEffect = 'move'
     },
     dragover(e) {
@@ -81,11 +105,16 @@ export default {
     dragleave(e) {
       e.dataTransfer.dropEffect = 'none'
     },
-    drop(e) {
+    drop(y, x, e) {
+      e.preventDefault()
+      const rect = this.$refs.editor.getBoundingClientRect()
+      // 获取鼠标在editor中的位置
+      const X = e.clientX - rect.x
+      const Y = e.clientY - rect.y
       const block = {
-        top: e.offsetY, left: e.offsetX,
+        top: Y - y, left: X - x,
         width: 190, height: 150,
-        zIndex: 1, focus: false, droped: true,
+        zIndex: 1, focus: false,
         type: this.dragedComponent.type
       }
       this.$store.commit('visualizeConfig/ADD_BLOCKS', block)
@@ -93,10 +122,10 @@ export default {
     },
     blockMousedown(e, index, block) {
       e.stopPropagation()
-      const { container, blocks } = this.config
-      if (e.shiftKey || e.ctrlKey) {
+      // 更新聚焦状态
+      if (e.shiftKey) { // ctrlKey在Mac中加左键会触发右键菜单
         this.$store.commit('visualizeConfig/UPDATE_BLOCKS', {
-          index, config: {...block, focus: blocks.filter(b => b.focus).length <= 1 ? true : !block.focus}
+          index, config: {...block, focus: this.config.blocks.filter(b => b.focus).length <= 1 ? true : !block.focus}
         })
       } else {
         if (!block.focus) {
@@ -104,6 +133,7 @@ export default {
           this.$store.commit('visualizeConfig/UPDATE_BLOCKS', {index, config: {...block, focus: true}})
         }
       }
+      const { container, blocks } = this.config
       // 记录所有选中元素起始位置配合 mousemove 可实现编辑器内拖拽元素
       const focusedBlocks = []
       // 记录所有未选中元素用来生成对齐参考线(和大屏中线)
@@ -136,12 +166,17 @@ export default {
         startX: e.clientX, startY: e.clientY, // 鼠标起始位置
         startTop, startLeft, // 鼠标拖拽元素的起始位置
         startPoints: focusedBlocks.map(({index,top,left}) => ({index,top,left})), // 所有选中元素起始位置
-        referenceLines // 对齐参考线
+        referenceLines, // 对齐参考线
+        dragging: false, // 是否在移动，用于触发操作监听事件
       }
       document.addEventListener('mousemove', this.blockMousemove)
       document.addEventListener('mouseup', this.blockMouseup)
     },
     blockMousemove(e) {
+      if (!this.blockDragState.dragging) {
+        this.blockDragState.dragging = true
+        this.$emit('dragstart')
+      }
       const {startX, startY, startTop, startLeft, startPoints, referenceLines } = this.blockDragState
       // 鼠标移动距离
       let distX = e.clientX - startX, distY = e.clientY - startY
@@ -174,15 +209,17 @@ export default {
       })
     },
     blockMouseup() {
+      if (this.blockDragState.dragging) {
+        this.blockDragState.dragging = false
+        this.$emit('dragend')
+      }
       document.removeEventListener('mousemove', this.blockMousemove)
       document.removeEventListener('mouseup', this.blockMouseup)
       this.markLine.horizontal = null
       this.markLine.vertical = null
     },
     clearBlockFocus() {
-      this.config.blocks.forEach((block, index) => {
-        this.$store.commit('visualizeConfig/UPDATE_BLOCKS', {index, config: {...block, focus: false}})
-      })
+      this.$store.commit('visualizeConfig/UPDATE_ALL_BLOCKS', this.config.blocks.map(b => ({ ...b, focus: false })))
     }
   }
 }
@@ -214,24 +251,35 @@ export default {
         right 0
         z-index 2
         cursor move
-  .middle .content
-    position relative
-    overflow hidden
-    background #352a46
-    .focus::after
-      border 2px dashed #5151ff
-    .h-line
-      position absolute
-      z-index 100
-      width 100%
-      top 0
-      border-top 1px dashed #888
-    .v-line
-      position absolute
-      z-index 100
-      height 100%
-      left 0
-      border-left 1px dashed #888
+  .middle
+    .header
+      display flex
+      justify-content center
+      align-items center
+      .svg
+        width 25px
+        height 25px
+        cursor pointer
+      .svg+.svg
+        margin-left 10px
+    .content
+      position relative
+      overflow hidden
+      background #352a46
+      .focus::after
+        border 2px dashed #5151ff
+      .h-line
+        position absolute
+        z-index 100
+        width 100%
+        top 0
+        border-top 1px dashed #888
+      .v-line
+        position absolute
+        z-index 100
+        height 100%
+        left 0
+        border-left 1px dashed #888
   .right
     border-left 1px solid #e6e6e6
 </style>
