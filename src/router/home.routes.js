@@ -26,7 +26,11 @@ export default [{
         path:'visualize',
         name:'visualize',
         component: () => import('@/views/visualize.vue'),
-      } 
+      },{
+        path:'setKeyWithIndex',
+        name:'setKeyWithIndex',
+        component: () => import('@/views/setKeyWithIndex.vue'),
+      }
     ]        
   }]
 }]

@@ -5,6 +5,7 @@
     <router-link to="/home/proxy">Proxy</router-link>
     <router-link to="/home/compile">Compile</router-link>
     <router-link to="/home/visualize">Visualize</router-link>
+    <router-link to="/home/setKeyWithIndex">setKeyWithIndex</router-link>
     <router-view class="view"></router-view>
   </div>
 </template>

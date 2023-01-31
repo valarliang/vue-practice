@@ -28,7 +28,7 @@ export default {
       })
     }
     const data = reactive(obj)
-    data.b.e = 4
+    data.b.e = 4 // 设置时会读取 data.b 触发getter添加响应
     // 'd' in data
     // console.log(data)
   },
