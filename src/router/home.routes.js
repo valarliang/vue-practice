@@ -30,7 +30,11 @@ export default [{
         path:'setKeyWithIndex',
         name:'setKeyWithIndex',
         component: () => import('@/views/setKeyWithIndex.vue'),
+      },{
+        path:'G6graph',
+        name:'G6graph',
+        component: () => import('@/views/G6graph.vue'),
       }
-    ]        
+    ]
   }]
 }]

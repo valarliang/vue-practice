@@ -6,6 +6,7 @@
     <router-link to="/home/compile">Compile</router-link>
     <router-link to="/home/visualize">Visualize</router-link>
     <router-link to="/home/setKeyWithIndex">setKeyWithIndex</router-link>
+    <router-link to="/home/G6graph">G6graph</router-link>
     <router-view class="view"></router-view>
   </div>
 </template>
