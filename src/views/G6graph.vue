@@ -1,5 +1,21 @@
 <template>
-  <div id="mountNode">test</div>
+  <div class="root">
+    <div class="head">
+      <div class="title">训练集 mse:24648.47 | 训练集 R2:0.47 | 验证集 mse:24648.47 | 验证集 R2:0.47</div>
+      <div class="btns">
+        <el-button>操作历史</el-button>
+        <el-button type="primary">计算</el-button>
+      </div>
+    </div>
+    <el-drawer
+      title="我是标题"
+      :visible.sync="drawer"
+      :direction="rtl"
+      :before-close="handleClose">
+      <span>我来啦!</span>
+    </el-drawer>
+    <div id="mountNode"></div>
+  </div>
 </template>
 
 <script>
@@ -9,7 +25,8 @@ export default {
   data() {
     return {
       nodeWidth: 212,
-      nodeHeight: 184
+      nodeHeight: 184,
+      drawer: false,
     }
   },
   computed: {
@@ -73,6 +90,7 @@ export default {
         const nodeItem = e.item; // 获取鼠标离开的节点元素对象
       });
     },
+    handleClose(done) {},
     registerNode() {
       G6.registerNode('node',
         {
@@ -189,7 +207,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.head {
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
+  padding: 0 310px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+  }
+}
 .a {
   width: 212px;
   height: 184px;

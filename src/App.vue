@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <SvgIcon name='architecture' class='svg'/>
-    <router-link to="/home">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <!-- <div>store：{{this.$store.state}}</div> -->
     <router-view />
   </div>
 </template>
@@ -57,13 +53,4 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align center
   color: #2c3e50;
-  margin-top: 60px;
-img
-  display: block;
-  margin: 0 auto;
-.svg
-  display block
-  width 50px
-  height 50px
-  margin auto
 </style>
