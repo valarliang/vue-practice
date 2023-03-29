@@ -10,8 +10,7 @@
     <el-drawer
       title="我是标题"
       :visible.sync="drawer"
-      :direction="rtl"
-      :before-close="handleClose">
+      :direction="rtl">
       <span>我来啦!</span>
     </el-drawer>
     <div id="mountNode"></div>
@@ -38,60 +37,57 @@ export default {
     },
   },
   mounted() {
-    this.registerNode()
-    this.registerLeaf()
-    this.registerEdge()
-    this.registerEvent()
-    this.graph = new G6.TreeGraph({
-      container: 'mountNode',
-      width: '100vw',
-      height: '100vh',
-      renderer: 'svg', // 使用 DOM 自定义节点
-      layout: {
-        type: 'compactBox',
-        direction: 'TB',
-        getWidth: ({ type }) => type === 'node' ? this.nodeWidth : this.leafWidth,
-        getHeight: ({ type }) => type === 'node' ? this.nodeHeight : this.leafHeight,
-        getHGap: ({ type }) => 10,
-        getVGap: ({ type }) => 30,
-      },
-      modes: {
-        default: ['drag-canvas', 'zoom-canvas'], // 允许拖拽画布、放缩画布
-        custom: ['zoom-canvas'],
-      },
-      defaultNode: {
-        type: 'node',
-        size: [this.nodeWidth, this.nodeHeight],
-        anchorPoints: [
-          [0.5, 0],
-          [0.5, 1]
-        ]
-      },
-      defaultEdge: {
-        type: 'flow-line',
-        style: {
-          stroke: '#B4C3D4',
-          endArrow: false,
-        },
-      },
-    });
+    this.register()
     this.main()
+  },
+  destroyed() {
+    window.editName = null
   },
   methods: {
     main() {
+      this.graph = new G6.TreeGraph({
+        container: 'mountNode',
+        width: '100vw',
+        height: '100vh',
+        renderer: 'svg', // 使用 DOM 自定义节点
+        layout: {
+          type: 'compactBox',
+          direction: 'TB',
+          getWidth: ({ type }) => type === 'node' ? this.nodeWidth : this.leafWidth,
+          getHeight: ({ type }) => type === 'node' ? this.nodeHeight : this.leafHeight,
+          getHGap: (d) => 10,
+          getVGap: (d) => 30,
+        },
+        modes: {
+          default: ['drag-canvas', 'zoom-canvas'], // 允许拖拽画布、放缩画布
+          custom: ['zoom-canvas'],
+        },
+        defaultNode: {
+          type: 'node',
+          size: [this.nodeWidth, this.nodeHeight],
+          anchorPoints: [
+            [0.5, 0],
+            [0.5, 1]
+          ]
+        },
+        defaultEdge: {
+          type: 'flow-line',
+          style: {
+            stroke: '#B4C3D4',
+            endArrow: false,
+          },
+        },
+      });
       this.graph.data(remoteData.tree); // 加载远程数据
-      this.graph.render(); // 渲染
-      // 鼠标进入节点
-      this.graph.on('node:mouseenter', (e) => {
-        const nodeItem = e.item; // 获取鼠标进入的节点元素对象
-      });
-      // 鼠标离开节点
-      this.graph.on('node:mouseleave', (e) => {
-        const nodeItem = e.item; // 获取鼠标离开的节点元素对象
-      });
+      this.graph.render()
+      this.graph.fitView()
     },
-    handleClose(done) {},
-    registerNode() {
+    register() {
+      window.editName = ev => {
+        this.graph.setMode('custom')
+        ev.target.contentEditable = true
+      }
+
       G6.registerNode('node',
         {
           draw: (cfg, group) => {
@@ -140,8 +136,6 @@ export default {
           },
         }
       );
-    },
-    registerLeaf() {
       G6.registerNode('leaf',
         {
           draw: (cfg, group) => {
@@ -160,7 +154,6 @@ export default {
                       <div style="width: 96px; text-align: right;">样本</div>
                       <div style="  width: 96px;text-align: left;">${nsamples}</div>
                     </li>
-                    </li>
                     <li style="display: flex; justify-content: space-between;">
                       <div style="width: 96px; text-align: right;">均值</div>
                       <div style="  width: 96px;text-align: left;">${output.val}</div>
@@ -172,8 +165,6 @@ export default {
           },
         }
       );
-    },
-    registerEdge() {
       G6.registerEdge('flow-line', {
         draw(cfg, group) {
           const { startPoint, endPoint, style } = cfg;
@@ -193,17 +184,7 @@ export default {
         }
       })
     },
-    registerEvent() {
-      window.editName = this.editName
-    },
-    editName(ev) {
-      this.graph.setMode('custom')
-      ev.target.contentEditable = true
-    }
   },
-  destroyed() {
-    window.editName = null
-  }
 }
 </script>
 
