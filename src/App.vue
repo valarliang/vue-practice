@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view />
+    {{test?.a}}
   </div>
 </template>
 
@@ -12,7 +13,7 @@ export default {
     return {
       app: 'app',
       acc: 3,
-      test: [1,{a:2}],
+      test: {a:123},
     }
   },
   computed: {
