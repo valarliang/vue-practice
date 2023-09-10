@@ -9,6 +9,8 @@ export default {
     function reactive(obj) {
       return new Proxy(obj, {
         get(target, key, receiver) {
+          // 此处不使用target[key]方式取值原因：当target中有getter或setter使用了this时，proxy实例对应的getter或setter使用
+          // 的this依然是target，需要修改this指向，即通过receiver指定到proxy实例本身
           const result = Reflect.get(target, key, receiver)
           console.log('get', key)
           return typeof result == 'object' ? reactive(result) : result // 响应式递归处理发生在设置值得时候，性能得到很大提升
