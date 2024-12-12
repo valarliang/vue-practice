@@ -1,7 +1,8 @@
 <template>
   <div class="body">
     <div class="head">
-      <SvgIcon name='architecture' class='svg'/>
+      <SvgIcon name='architecture-multi' class='svg'/>
+      <SvgIcon name='toolbar_shell' class='svg'/>
       <router-link to="/home">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
@@ -23,19 +24,20 @@
 </script>
 
 <style lang="stylus" scoped>
-.body
+.body {
   margin-top 60px
   display flex
   flex-direction column
   align-items center
+}
   .head
     margin-bottom: 30px
     text-align: center
     .svg
+      font-size: 30px
+      color: red
       display block
-      width 50px
-      height 50px
-      margin auto
+      margin: auto
     .view
       margin-top 20px
   img

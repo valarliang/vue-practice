@@ -23,5 +23,9 @@
 
 <style lang="stylus" scoped>
 .i
-  vertical-align -0.15em
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 </style>

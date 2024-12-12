@@ -21,6 +21,7 @@ module.exports = {
       libraryTarget: 'umd', // 把微应用打包成 umd 库格式
       jsonpFunction: `webpackJsonp_${name}`,
     },
+    resolveLoader:{modules:['node_modules','loader']},
   },
   chainWebpack(config) {
     // 对config链式操作可修改loader、plugin，配置查看 vue inspect --rule svg
@@ -34,6 +35,7 @@ module.exports = {
         .loader('svg-sprite-loader')
         .options({
           symbolId: 'icon-[name]'
-        })
+        }).end()
+      .use('svg-color-ctr-loader').loader('svg-color-ctr-loader').end()
   }
 }

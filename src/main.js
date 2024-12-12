@@ -16,7 +16,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 // import ECharts from 'vue-echarts'
 import "echarts"
+import TestComp from 'my-rollup-ui'
 
+Vue.use(TestComp)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 // Vue.component('v-chart', ECharts)
